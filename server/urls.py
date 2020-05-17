@@ -20,5 +20,6 @@ from stock_server import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('stock', views.StockPrice.as_view())
+    path('stock/', views.StockPrice.as_view()),
+    path('delete/', views.DeleteTableData.as_view()),
 ]
