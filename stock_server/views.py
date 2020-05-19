@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from .files.integration import get_stock_price
 from .models import Stock
 # Create your views here.
+from .serializers import StockDataSerializer
 from .utils.twitter_utils import get_polarity
 
 
@@ -24,11 +25,8 @@ class StockPrice(APIView):
             stocks.price += (stocks.price * polarity * 5) / 100
             stocks.polarity_positive = polarity > 0
             stocks.save()
-        data = {
-            'price': stocks.price,
-            'polarity': stocks.polarity_positive
-        }
-        return Response(data=data, status=HTTP_200_OK)
+        serializer = StockDataSerializer(stocks)
+        return Response(data=serializer.data, status=HTTP_200_OK)
 
 
 class DeleteTableData(APIView):
